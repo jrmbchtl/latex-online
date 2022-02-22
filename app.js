@@ -44,12 +44,14 @@ function onInitialized(latex) {
 }
 
 // Initialize server.
-var express = require('express');
-var compression = require('compression');
+const express = require('express');
+const compression = require('compression');
+const bodyParser = require('body-parser');
 
 var app = express();
 app.use(compression());
 app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 function sendError(res, userError) {
     res.set('Content-Type', 'text/plain');
@@ -125,6 +127,25 @@ app.get('/compile', async (req, res) => {
         handleResult(res, preparation, forceCompilation, req.query.download);
     else
         sendError(res, 'ERROR: failed to parse request: ' + JSON.stringify(req.query));
+});
+
+app.post('/compile', async (req, res) => {
+    var forceCompilation = req.body && !!req.body.force;
+    var command = req.body && req.body.command ? req.body.command : 'pdflatex';
+    command = command.trim().toLowerCase();
+    var preparation;
+    if (req.body.text) {
+        preparation = await latexOnline.prepareTextCompilation(req.body.text, command);
+    } else if (req.body.url) {
+        preparation = await latexOnline.prepareURLCompilation(req.body.url, command);
+    } else if (req.body.git) {
+        var workdir = req.body.workdir || '';
+        preparation = await latexOnline.prepareGitCompilation(req.body.git, req.body.target, 'master', command, workdir);
+    }
+    if (preparation)
+        handleResult(res, preparation, forceCompilation, req.body.download);
+    else
+        sendError(res, 'ERROR: failed to parse request: ' + JSON.stringify(req.body));
 });
 
 var multer  = require('multer')
