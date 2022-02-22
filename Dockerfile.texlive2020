@@ -9,9 +9,7 @@
 # Rely on official texlive base image.
 # Description: https://gitlab.com/islandoftex/images/texlive
 # Registry viewer: https://gitlab.com/islandoftex/images/texlive/container_registry
-FROM registry.gitlab.com/islandoftex/images/texlive:TL2020-2020-05-17-04-19-src
-
-MAINTAINER Andrey Lushnikov aslushnikov@gmail.com
+FROM registry.gitlab.com/islandoftex/images/texlive:latest-src
 
 # Install git & Node.JS
 RUN apt-get clean && apt-get update && apt-get install -y git-core nodejs npm && \
