@@ -1,0 +1,29 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: docker login
+      env:
+        DOCKER_USER: ${{secrets.DOCKER_USER}}
+        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+      run: |
+        echo $(date +%s) > tag.txt
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag dschorim/latex-online:$(cat tag.txt) --tag dschorim/latex-onlines:nightly
+    - name: Docker push
+      run: |
+        docker push ${{secrets.DOCKER_USER}}/latex-online:$(cat tag.txt)
+        docker push ${{secrets.DOCKER_USER}}/latex-online:nightly
