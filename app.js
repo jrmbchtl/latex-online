@@ -76,7 +76,7 @@ async function handleResult(res, preparation, force, downloadName, type) {
 
     // In case of URL compilation and cached compilation object, the downlaoder
     // has to be cleaned up.
-    downloader.dispose();
+    //downloader.dispose();
 
     if (compilation.userError) {
         sendError(res, compilation.userError);
