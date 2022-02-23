@@ -874,7 +874,7 @@ class LaTeX(Task):
         r'^Output written on "?(.*?\.[^ ."]+)\.'
         # for m in re.finditer(r'^Output written on "?(.*?\.[^ ."]+)"?',
         #                      stdout, re.MULTILINE | re.DOTALL):
-        for m in re.finditer(r'^Output written on "?(.*?\.[^ ."]+)\.',
+        for m in re.finditer(r'^Output written on "?(.*?\.[^ ."]+)\.\n',
                              stdout, re.MULTILINE | re.DOTALL):
             outname = m.group(1).replace('\n', '')
             print("hello2")
