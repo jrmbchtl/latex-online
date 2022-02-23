@@ -874,6 +874,8 @@ class LaTeX(Task):
             outname = m.group(1).replace('\n', '')
             # if m.group(2) == "page":
             #     outname = m.group(1).replace('\n', '')
+        print("hello2")
+        print(outname)
         if outname is None and not \
            re.search(r'^No pages of output\.$|^! Emergency stop\.$'
                      r'|^!  ==> Fatal error occurred, no output PDF file produced!$',
@@ -1025,6 +1027,8 @@ class LaTeXCommit(Task):
 
         # If latex succeeded with output, atomically commit the output
         status, outname = self._input('latex')
+        print("hello1")
+        print(outname)
         if status != 0 or outname is None:
             debug('not committing (status {}, outname {})', status, outname)
             if outname is None:
