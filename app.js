@@ -51,12 +51,7 @@ const bodyParser = require('body-parser');
 var app = express();
 app.use(compression());
 app.use(express.static(__dirname + '/public'));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.urlencoded({
-    parameterLimit: 100000,
-    limit: '50mb',
-    extended: true
-  }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 
 
 function sendError(res, userError) {
