@@ -69,8 +69,8 @@ async function handleResult(res, preparation, force, downloadName, type) {
     }
     
     var compilation = latexOnline.compilationWithFingerprint(request.fingerprint);
-    if (force && compilation)
-        latexOnline.removeCompilation(compilation);
+    // if (force && compilation)
+    //     latexOnline.removeCompilation(compilation);
     compilation = latexOnline.getOrCreateCompilation(request, downloader);
     await compilation.run();
 
