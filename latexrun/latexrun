@@ -110,6 +110,9 @@ def main():
     args.latex_args = args.latex_args or []
     args.bibtex_args = args.bibtex_args or []
 
+    print("hello3")
+    print(args.output)
+
     verbose_cmd.enabled = args.verbose_cmds
     debug.enabled = args.debug
 
