@@ -867,8 +867,11 @@ class LaTeX(Task):
         if jobname is None:
             print(stdout, file=sys.stderr)
             raise TaskError('failed to extract job name from latex log')
-        for m in re.finditer(r'^Output written on "?(.*?\.[^ ."]+)"? \([0-9]+ (page)?',
+        # for m in re.finditer(r'^Output written on "?(.*?\.[^ ."]+)"? \([0-9]+ (page)?',
+        #                      stdout, re.MULTILINE | re.DOTALL):
+        for m in re.finditer(r'^Output written on "?(.*?\.[^ ."]+)"?',
                              stdout, re.MULTILINE | re.DOTALL):
+            print(m)
             if m.group(2) == "page":
                 outname = m.group(1).replace('\n', '')
         if outname is None and not \
