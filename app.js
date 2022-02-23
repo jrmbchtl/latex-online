@@ -69,14 +69,14 @@ async function handleResult(res, preparation, force, downloadName, type) {
     }
     
     var compilation = latexOnline.compilationWithFingerprint(request.fingerprint);
-    // if (force && compilation)
-    //     latexOnline.removeCompilation(compilation);
+    if (force && compilation)
+        latexOnline.removeCompilation(compilation);
     compilation = latexOnline.getOrCreateCompilation(request, downloader);
     await compilation.run();
 
     // In case of URL compilation and cached compilation object, the downlaoder
     // has to be cleaned up.
-    //downloader.dispose();
+    downloader.dispose();
 
     if (compilation.userError) {
         sendError(res, compilation.userError);
@@ -135,7 +135,6 @@ app.get('/compile', async (req, res) => {
 
 app.post('/compile', async (req, res) => {
     var type = req.body.type ? req.body.type : 'pdf';
-    // var type = 'pdf';
 
     var forceCompilation = req.body && !!req.body.force;
     var command = req.body && req.body.command ? req.body.command : 'pdflatex';
