@@ -132,9 +132,6 @@ def main():
 
     Message.setup_color(args.color)
 
-    print("hello3")
-    print(args.output)
-
     # Open control database.
     dbpath = os.path.join(args.obj_dir, '.latexrun.db')
     if not os.path.exists(dbpath) and os.path.exists('.latexrun.db'):
@@ -876,10 +873,10 @@ class LaTeX(Task):
         for m in re.finditer(r'^Output written on "?(.*?\.[^ ."]+)"?',
                              stdout, re.MULTILINE | re.DOTALL):
             outname = m.group(1).replace('\n', '')
+            print("hello2")
+            print(outname)
             # if m.group(2) == "page":
             #     outname = m.group(1).replace('\n', '')
-        print("hello2")
-        print(outname)
         if outname is None and not \
            re.search(r'^No pages of output\.$|^! Emergency stop\.$'
                      r'|^!  ==> Fatal error occurred, no output PDF file produced!$',
