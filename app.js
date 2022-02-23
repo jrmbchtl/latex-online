@@ -52,7 +52,12 @@ var app = express();
 app.use(compression());
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: true }));
-bodyParser.json({limit: '50mb'});
+app.use(bodyParser.urlencoded({
+    parameterLimit: 100000,
+    limit: '50mb',
+    extended: true
+  }));
+
 
 function sendError(res, userError) {
     res.set('Content-Type', 'text/plain');
