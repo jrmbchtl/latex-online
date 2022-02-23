@@ -877,6 +877,9 @@ class LaTeX(Task):
         for m in re.finditer(r'^Output written on "?(.*?\.[^ ."]+).?[ \n]',
                              stdout, re.MULTILINE | re.DOTALL):
             outname = m.group(1).replace('\n', '')
+            # dirty fix cause I can't figure the regex out
+            if outname[-1] == '.':
+                outname = outname[:-1]
             print("hello2")
             print(outname)
             # if m.group(2) == "page":
