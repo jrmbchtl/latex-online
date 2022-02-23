@@ -146,7 +146,7 @@ app.post('/compile', async (req, res) => {
     command = command.trim().toLowerCase();
     var preparation;
     if (req.body.text) {
-        preparation = await latexOnline.prepareTextCompilation(req.body.text, command);
+        preparation = await latexOnline.prepareTextCompilation(req.body.text, command, type);
     } else if (req.body.url) {
         preparation = await latexOnline.prepareURLCompilation(req.body.url, command);
     } else if (req.body.git) {
