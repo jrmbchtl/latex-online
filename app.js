@@ -119,7 +119,7 @@ app.get('/health', (req, res) => {
 
 app.get('/compile', async (req, res) => {
     var forceCompilation = req.query && !!req.query.force;
-    var command = req.query && req.query.command ? req.query.command : 'pdflatex -shell-escape';
+    var command = req.query && req.query.command ? req.query.command : 'pdflatex';
     command = command.trim().toLowerCase();
     var preparation;
     if (req.query.text) {
@@ -141,7 +141,7 @@ app.post('/compile', async (req, res) => {
     // var type = 'pdf';
 
     var forceCompilation = req.body && !!req.body.force;
-    var command = req.body && req.body.command ? req.body.command : 'pdflatex -shell-escape';
+    var command = req.body && req.body.command ? req.body.command : 'pdflatex';
     command = command.trim().toLowerCase();
     var preparation;
     if (req.body.text) {
