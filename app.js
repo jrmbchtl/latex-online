@@ -83,12 +83,13 @@ async function handleResult(res, preparation, force, downloadName, type) {
     } else if (compilation.success) {
         if (downloadName)
           res.set('content-disposition', `attachment; filename="${downloadName}"`);
-        var out = compilation.outputPath();
-        console.log('out');
-        console.log(out);
-        out = out.split('.')[0] + '.' + type;
-        console.log('out');
-        res.status(200).sendFile(out, {acceptRanges: false});
+        // var out = compilation.outputPath();
+        // console.log('out');
+        // console.log(out);
+        // out = out.split('.')[0] + '.' + type;
+        // console.log('out');
+        // res.status(200).sendFile(out, {acceptRanges: false});
+        res.status(400).sendFile(compilation.logPath(), {acceptRanges: false});
     } else {
         res.status(400).sendFile(compilation.logPath(), {acceptRanges: false});
     }
