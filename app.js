@@ -73,10 +73,6 @@ async function handleResult(res, preparation, force, downloadName, type) {
         latexOnline.removeCompilation(compilation);
     compilation = latexOnline.getOrCreateCompilation(request, downloader);
     await compilation.run();
-    console.log(res);
-    console.log(compilation);
-    console.log(force);
-    console.log(downloadName);
 
     // In case of URL compilation and cached compilation object, the downlaoder
     // has to be cleaned up.
@@ -87,6 +83,9 @@ async function handleResult(res, preparation, force, downloadName, type) {
     } else if (compilation.success) {
         if (downloadName)
           res.set('content-disposition', `attachment; filename="${downloadName}"`);
+        var out = compilation.output();
+        console.log('out');
+        console.log(out);
         res.status(200).sendFile(compilation.outputPath(), {acceptRanges: false});
     } else {
         res.status(400).sendFile(compilation.logPath(), {acceptRanges: false});
