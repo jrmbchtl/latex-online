@@ -52,6 +52,7 @@ var app = express();
 app.use(compression());
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.bodyParser({limit: '50mb'}));
 
 function sendError(res, userError) {
     res.set('Content-Type', 'text/plain');
@@ -130,11 +131,9 @@ app.get('/compile', async (req, res) => {
 });
 
 app.post('/compile', async (req, res) => {
-    console.log('1');
     var forceCompilation = req.body && !!req.body.force;
     var command = req.body && req.body.command ? req.body.command : 'pdflatex';
     command = command.trim().toLowerCase();
-    console.log('2');
     var preparation;
     if (req.body.text) {
         preparation = await latexOnline.prepareTextCompilation(req.body.text, command);
@@ -144,13 +143,10 @@ app.post('/compile', async (req, res) => {
         var workdir = req.body.workdir || '';
         preparation = await latexOnline.prepareGitCompilation(req.body.git, req.body.target, 'master', command, workdir);
     }
-    console.log('3');
     if (preparation) {
-        console.log('4');
         handleResult(res, preparation, forceCompilation, req.body.download);
     }
     else {
-        console.log('5');
         sendError(res, 'ERROR: failed to parse request: ' + JSON.stringify(req.body));
     }
 });
