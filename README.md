@@ -9,7 +9,7 @@
 
 # About LaTeX.Online [![alt text][1.1]][1]
 
-The original version was developed by [aslushnikov](https://github.com/aslushnikov/latex-online), this version just added post requests support for /compile and increased file limit to 50MB.
+The original version was developed by [aslushnikov](https://github.com/aslushnikov/latex-online), this version just added post requests support for /compile and increased file limit to 50MB as well as jpg and png generation.
 
 
 This service is developed to compile latex documents online. It can build PDF directly from GIT repository with TeX sources or from any link to TeX file. 

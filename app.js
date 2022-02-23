@@ -84,12 +84,8 @@ async function handleResult(res, preparation, force, downloadName, type) {
         if (downloadName)
           res.set('content-disposition', `attachment; filename="${downloadName}"`);
         var out = compilation.outputPath();
-        console.log('out');
-        console.log(out);
         out = out.split('.')[0] + '.' + type;
-        console.log(out);
         res.status(200).download(compilation.outputPath(), 'document.' + type);
-        // res.status(200).sendFile(compilation.outputPath(), {acceptRanges: false});
     } else {
         res.status(400).sendFile(compilation.logPath(), {acceptRanges: false});
     }
@@ -146,8 +142,6 @@ app.post('/compile', async (req, res) => {
     command = command.trim().toLowerCase();
     var preparation;
     if (req.body.text) {
-        console.log("type");
-        console.log(type);
         preparation = await latexOnline.prepareTextCompilation(req.body.text, command, type);
     } else if (req.body.url) {
         preparation = await latexOnline.prepareURLCompilation(req.body.url, command);
