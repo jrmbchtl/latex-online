@@ -86,7 +86,9 @@ async function handleResult(res, preparation, force, downloadName, type) {
         var out = compilation.outputPath();
         console.log('out');
         console.log(out);
-        res.status(200).sendFile(compilation.outputPath(), {acceptRanges: false});
+        out = out.split('.')[0] + '.' + type;
+        console.log('out');
+        res.status(200).sendFile(out, {acceptRanges: false});
     } else {
         res.status(400).sendFile(compilation.logPath(), {acceptRanges: false});
     }
@@ -117,7 +119,7 @@ app.get('/health', (req, res) => {
 
 app.get('/compile', async (req, res) => {
     var forceCompilation = req.query && !!req.query.force;
-    var command = req.query && req.query.command ? req.query.command : 'pdflatex';
+    var command = req.query && req.query.command ? req.query.command : 'pdflatex -shell-escape';
     command = command.trim().toLowerCase();
     var preparation;
     if (req.query.text) {
