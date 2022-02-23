@@ -61,17 +61,19 @@ function sendError(res, userError) {
     res.status(statusCode).send(error)
 }
 
-async function handleResult(res, preparation, force, downloadName) {
+async function handleResult(res, preparation, force, downloadName, type) {
     var {request, downloader, userError} = preparation;
     if (!request) {
         sendError(res, userError);
         return;
     }
+    
     var compilation = latexOnline.compilationWithFingerprint(request.fingerprint);
     if (force && compilation)
         latexOnline.removeCompilation(compilation);
     compilation = latexOnline.getOrCreateCompilation(request, downloader);
     await compilation.run();
+    console.log(downloadName);
 
     // In case of URL compilation and cached compilation object, the downlaoder
     // has to be cleaned up.
@@ -131,6 +133,8 @@ app.get('/compile', async (req, res) => {
 });
 
 app.post('/compile', async (req, res) => {
+    var type = req.body.type ? req.body.type.trim().toLowerCase() : 'pdf';
+
     var forceCompilation = req.body && !!req.body.force;
     var command = req.body && req.body.command ? req.body.command : 'pdflatex';
     command = command.trim().toLowerCase();
@@ -144,7 +148,7 @@ app.post('/compile', async (req, res) => {
         preparation = await latexOnline.prepareGitCompilation(req.body.git, req.body.target, 'master', command, workdir);
     }
     if (preparation) {
-        handleResult(res, preparation, forceCompilation, req.body.download);
+        handleResult(res, preparation, forceCompilation, req.body.download, type);
     }
     else {
         sendError(res, 'ERROR: failed to parse request: ' + JSON.stringify(req.body));
