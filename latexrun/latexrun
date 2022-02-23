@@ -110,8 +110,6 @@ def main():
     args.latex_args = args.latex_args or []
     args.bibtex_args = args.bibtex_args or []
 
-    print("hello3")
-    print(args.output)
 
     verbose_cmd.enabled = args.verbose_cmds
     debug.enabled = args.debug
@@ -133,6 +131,9 @@ def main():
         errors='surrogateescape', line_buffering=sys.stderr.line_buffering)
 
     Message.setup_color(args.color)
+
+    print("hello3")
+    print(args.output)
 
     # Open control database.
     dbpath = os.path.join(args.obj_dir, '.latexrun.db')
