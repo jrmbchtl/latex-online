@@ -869,13 +869,11 @@ class LaTeX(Task):
             raise TaskError('failed to extract job name from latex log')
         # for m in re.finditer(r'^Output written on "?(.*?\.[^ ."]+)"? \([0-9]+ (page)?',
         #                      stdout, re.MULTILINE | re.DOTALL):
-        tmp = re.finditer(r'^Output written on "?(.*?\.[^ ."]+)"?',
-                             stdout, re.MULTILINE | re.DOTALL)[-1]
-        # print(m)
-        outname = tmp.group(1).replace('\n', '')
-        # print(m.group(1))
-        #     # if m.group(2) == "page":
-        #     #     outname = m.group(1).replace('\n', '')
+        for m in re.finditer(r'^Output written on "?(.*?\.[^ ."]+)"?',
+                             stdout, re.MULTILINE | re.DOTALL):
+            outname = m.group(1).replace('\n', '')
+            # if m.group(2) == "page":
+            #     outname = m.group(1).replace('\n', '')
         if outname is None and not \
            re.search(r'^No pages of output\.$|^! Emergency stop\.$'
                      r'|^!  ==> Fatal error occurred, no output PDF file produced!$',
