@@ -83,7 +83,7 @@ async function handleResult(res, preparation, force, downloadName, type) {
     } else if (compilation.success) {
         if (downloadName)
           res.set('content-disposition', `attachment; filename="${downloadName}"`);
-        var out = compilation.output();
+        var out = compilation.outputPath();
         console.log('out');
         console.log(out);
         res.status(200).sendFile(compilation.outputPath(), {acceptRanges: false});
