@@ -73,6 +73,9 @@ async function handleResult(res, preparation, force, downloadName, type) {
         latexOnline.removeCompilation(compilation);
     compilation = latexOnline.getOrCreateCompilation(request, downloader);
     await compilation.run();
+    console.log(res);
+    console.log(compilation);
+    console.log(force);
     console.log(downloadName);
 
     // In case of URL compilation and cached compilation object, the downlaoder
