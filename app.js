@@ -88,7 +88,7 @@ async function handleResult(res, preparation, force, downloadName, type) {
         console.log(out);
         out = out.split('.')[0] + '.' + type;
         console.log(out);
-        res.status(200).download(compilation.outputPath(), "test.png");
+        res.status(200).download(compilation.outputPath(), 'document.' + type);
         // res.status(200).sendFile(compilation.outputPath(), {acceptRanges: false});
     } else {
         res.status(400).sendFile(compilation.logPath(), {acceptRanges: false});
