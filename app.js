@@ -137,11 +137,11 @@ app.get('/compile', async (req, res) => {
 });
 
 app.post('/compile', async (req, res) => {
-    // var type = req.body.type ? req.body.type.trim().toLowerCase() : 'pdf';
-    var type = 'pdf';
+    var type = req.body.type ? req.body.type : 'pdf';
+    // var type = 'pdf';
 
     var forceCompilation = req.body && !!req.body.force;
-    var command = req.body && req.body.command ? req.body.command : 'pdflatex';
+    var command = req.body && req.body.command ? req.body.command : 'pdflatex -shell-escape';
     command = command.trim().toLowerCase();
     var preparation;
     if (req.body.text) {
