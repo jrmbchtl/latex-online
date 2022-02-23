@@ -872,8 +872,9 @@ class LaTeX(Task):
         for m in re.finditer(r'^Output written on "?(.*?\.[^ ."]+)"?',
                              stdout, re.MULTILINE | re.DOTALL):
             print(m)
-            if m.group(2) == "page":
-                outname = m.group(1).replace('\n', '')
+            print(m.group(1))
+            # if m.group(2) == "page":
+            #     outname = m.group(1).replace('\n', '')
         if outname is None and not \
            re.search(r'^No pages of output\.$|^! Emergency stop\.$'
                      r'|^!  ==> Fatal error occurred, no output PDF file produced!$',
